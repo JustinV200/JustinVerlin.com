@@ -26,6 +26,7 @@
 - Git / GitHub — proficient; version control, collaborative workflows
 - Cloud deployment — some exposure; deployed services to cloud platforms
 - CI/CD — some exposure; basic pipelines
+- OpenSSL: used at New York City health and hospital when I was an intern
 
 ## Systems & Low-Level
 - C — coursework exposure; systems and operating systems courses

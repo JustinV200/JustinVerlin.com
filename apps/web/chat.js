@@ -29,90 +29,117 @@ async function streamChat(message, history, onToken) {
 	return full;
 }
 
-/* ---------- Hero chat ---------- */
+/* ---------- Hero chat (index.html only) ---------- */
 const heroForm = document.getElementById("hero-form");
-const heroInput = document.getElementById("hero-input");
-const heroResponse = document.getElementById("hero-response");
-const heroHistory = [];
+if (heroForm) {
+	const heroInput = document.getElementById("hero-input");
+	const heroResponse = document.getElementById("hero-response");
+	const heroHistory = [];
 
-async function runHero(message) {
-	if (!message.trim()) return;
-	heroInput.value = "";
-	heroResponse.hidden = false;
-	heroResponse.textContent = "";
-	const btn = heroForm.querySelector("button[type=submit]");
-	btn.disabled = true;
-	try {
-		const reply = await streamChat(message, heroHistory, (t) => {
-			heroResponse.textContent += t;
-		});
-		heroHistory.push({ role: "user", content: message });
-		heroHistory.push({ role: "assistant", content: reply });
-	} catch (e) {
-		heroResponse.textContent = "Couldn't reach the API. Is it running?";
-	} finally {
-		btn.disabled = false;
+	async function runHero(message) {
+		if (!message.trim()) return;
+		heroInput.value = "";
+		heroResponse.hidden = false;
+		heroResponse.textContent = "";
+		const btn = heroForm.querySelector("button[type=submit]");
+		btn.disabled = true;
+		try {
+			const reply = await streamChat(message, heroHistory, (t) => {
+				heroResponse.textContent += t;
+			});
+			heroHistory.push({ role: "user", content: message });
+			heroHistory.push({ role: "assistant", content: reply });
+		} catch {
+			heroResponse.textContent = "Couldn't reach the API. Is it running?";
+		} finally {
+			btn.disabled = false;
+		}
 	}
-}
 
-heroForm.addEventListener("submit", (e) => {
-	e.preventDefault();
-	runHero(heroInput.value);
-});
-
-document.querySelectorAll(".chip").forEach((chip) => {
-	chip.addEventListener("click", () => {
-		const prompt = chip.dataset.prompt;
-		heroInput.value = prompt;
-		runHero(prompt);
+	heroForm.addEventListener("submit", (e) => {
+		e.preventDefault();
+		runHero(heroInput.value);
 	});
-});
 
-/* ---------- Floating panel ---------- */
-const bubble = document.getElementById("chat-bubble");
-const panel = document.getElementById("chat-panel");
-const closeBtn = document.getElementById("chat-close");
-const panelForm = document.getElementById("panel-form");
-const panelInput = document.getElementById("panel-input");
-const chatLog = document.getElementById("chat-log");
-const panelHistory = [];
-
-function addMsg(cls, text) {
-	const div = document.createElement("div");
-	div.className = `msg ${cls}`;
-	div.textContent = text;
-	chatLog.appendChild(div);
-	chatLog.scrollTop = chatLog.scrollHeight;
-	return div;
+	document.querySelectorAll(".chip").forEach((chip) => {
+		chip.addEventListener("click", () => {
+			const prompt = chip.dataset.prompt;
+			heroInput.value = prompt;
+			runHero(prompt);
+		});
+	});
 }
 
-bubble.addEventListener("click", () => {
-	panel.hidden = !panel.hidden;
-	if (!panel.hidden) panelInput.focus();
-});
-closeBtn.addEventListener("click", () => {
-	panel.hidden = true;
-});
+/* ---------- Floating chat bubble (injected on every page) ---------- */
+(function injectBubble() {
+	const html = `
+		<button id="chat-bubble" class="chat-bubble" aria-label="Open chat">
+			<img src="assets/images/justinAI/justinAI.png" alt="" onerror="this.style.display='none'" />
+			<span class="bubble-fallback">Chat</span>
+		</button>
+		<div id="chat-panel" class="chat-panel" hidden>
+			<div class="chat-panel-header">
+				<strong>Ask JustinAI</strong>
+				<button id="chat-close" aria-label="Close">&times;</button>
+			</div>
+			<div id="chat-log" class="chat-log"></div>
+			<form id="panel-form" class="chat-form panel-form">
+				<input id="panel-input" type="text" autocomplete="off" maxlength="500" placeholder="Ask anything..." />
+				<button type="submit" aria-label="Send">
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+				</button>
+			</form>
+		</div>
+	`;
+	const wrap = document.createElement("div");
+	wrap.innerHTML = html;
+	while (wrap.firstChild) document.body.appendChild(wrap.firstChild);
 
-panelForm.addEventListener("submit", async (e) => {
-	e.preventDefault();
-	const message = panelInput.value.trim();
-	if (!message) return;
-	panelInput.value = "";
-	addMsg("user", message);
-	const botMsg = addMsg("bot", "");
-	const btn = panelForm.querySelector("button[type=submit]");
-	btn.disabled = true;
-	try {
-		const reply = await streamChat(message, panelHistory, (t) => {
-			botMsg.textContent += t;
-			chatLog.scrollTop = chatLog.scrollHeight;
-		});
-		panelHistory.push({ role: "user", content: message });
-		panelHistory.push({ role: "assistant", content: reply });
-	} catch {
-		botMsg.textContent = "Couldn't reach the API.";
-	} finally {
-		btn.disabled = false;
+	const bubble = document.getElementById("chat-bubble");
+	const panel = document.getElementById("chat-panel");
+	const closeBtn = document.getElementById("chat-close");
+	const panelForm = document.getElementById("panel-form");
+	const panelInput = document.getElementById("panel-input");
+	const chatLog = document.getElementById("chat-log");
+	const panelHistory = [];
+
+	function addMsg(cls, text) {
+		const div = document.createElement("div");
+		div.className = `msg ${cls}`;
+		div.textContent = text;
+		chatLog.appendChild(div);
+		chatLog.scrollTop = chatLog.scrollHeight;
+		return div;
 	}
-});
+
+	bubble.addEventListener("click", () => {
+		panel.hidden = !panel.hidden;
+		if (!panel.hidden) panelInput.focus();
+	});
+	closeBtn.addEventListener("click", () => {
+		panel.hidden = true;
+	});
+
+	panelForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		const message = panelInput.value.trim();
+		if (!message) return;
+		panelInput.value = "";
+		addMsg("user", message);
+		const botMsg = addMsg("bot", "");
+		const btn = panelForm.querySelector("button[type=submit]");
+		btn.disabled = true;
+		try {
+			const reply = await streamChat(message, panelHistory, (t) => {
+				botMsg.textContent += t;
+				chatLog.scrollTop = chatLog.scrollHeight;
+			});
+			panelHistory.push({ role: "user", content: message });
+			panelHistory.push({ role: "assistant", content: reply });
+		} catch {
+			botMsg.textContent = "Couldn't reach the API.";
+		} finally {
+			btn.disabled = false;
+		}
+	});
+})();

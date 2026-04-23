@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Gallery — Justin Verlin</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<nav class="nav">
+		<a href="index.html" class="nav-brand">Justin Verlin</a>
+		<div class="nav-links">
+			<a href="projects.html">Projects</a>
+			<a href="gallery.html">Gallery</a>
+			<a href="keystroke.html">Keystroke Sandbox</a>
+			<a href="index.html#about">About</a>
+			<a href="index.html#contact">Contact</a>
+			<a href="https://github.com/JustinV200" target="_blank" rel="noopener">GitHub</a>
+		</div>
+	</nav>
+
+	<section class="section">
+		<h2>Gallery</h2>
+		<p class="lede" style="margin-bottom:2.5rem;">Select photos from my life.</p>
+		<div class="gallery-grid" id="gallery-grid"></div>
+	</section>
+
+	<footer class="footer">
+		<p><a href="index.html">← Back home</a></p>
+	</footer>
+
+	<!-- Lightbox -->
+	<div class="lightbox" id="lightbox" hidden aria-modal="true" role="dialog">
+		<button class="lightbox-close" id="lb-close" aria-label="Close">&#x2715;</button>
+		<button class="lightbox-btn lightbox-prev" id="lb-prev" aria-label="Previous">&#x2039;</button>
+		<img class="lightbox-img" id="lb-img" src="" alt="" />
+		<button class="lightbox-btn lightbox-next" id="lb-next" aria-label="Next">&#x203A;</button>
+	</div>
+
+	<script>
+	(function () {
+		const GALLERY_DIR = 'assets/images/gallery/';
+		const IMAGE_EXTS = new Set(['jpg','jpeg','png','webp','gif','avif']);
+		const grid = document.getElementById('gallery-grid');
+		const lightbox = document.getElementById('lightbox');
+		const lbImg = document.getElementById('lb-img');
+		let images = [];
+		let current = 0;
+
+		function openLightbox(index) {
+			current = index;
+			lbImg.src = images[current];
+			lightbox.removeAttribute('hidden');
+			document.body.style.overflow = 'hidden';
+		}
+		function closeLightbox() {
+			lightbox.setAttribute('hidden', '');
+			document.body.style.overflow = '';
+		}
+		function prev() { openLightbox((current - 1 + images.length) % images.length); }
+		function next() { openLightbox((current + 1) % images.length); }
+
+		function addImage(src, index) {
+			const item = document.createElement('div');
+			item.className = 'gallery-item';
+			const img = document.createElement('img');
+			img.src = src;
+			img.alt = '';
+			img.loading = 'lazy';
+			img.addEventListener('click', () => openLightbox(index));
+			item.appendChild(img);
+			grid.appendChild(item);
+		}
+
+		fetch(GALLERY_DIR)
+			.then(r => r.json())
+			.then(entries => {
+				images = entries
+					.filter(e => e.type === 'file' && IMAGE_EXTS.has(e.name.split('.').pop().toLowerCase()))
+					.map(e => GALLERY_DIR + e.name);
+				images.forEach((src, i) => addImage(src, i));
+			})
+			.catch(() => {
+				grid.innerHTML = '<p style="color:var(--text-dim)">Could not load gallery.</p>';
+			});
+
+		document.getElementById('lb-close').addEventListener('click', closeLightbox);
+		document.getElementById('lb-prev').addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+		document.getElementById('lb-next').addEventListener('click', (e) => { e.stopPropagation(); next(); });
+		lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+		document.addEventListener('keydown', (e) => {
+			if (lightbox.hasAttribute('hidden')) return;
+			if (e.key === 'Escape') closeLightbox();
+			if (e.key === 'ArrowLeft') prev();
+			if (e.key === 'ArrowRight') next();
+		});
+	}());
+	</script>
+
+	<script src="chat.js"></script>
+</body>
+</html>
