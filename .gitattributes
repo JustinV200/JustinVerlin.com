@@ -1,2 +1,0 @@
-bestmodel.pt filter=lfs diff=lfs merge=lfs -text
-data/keystroke/best_model.pt filter=lfs diff=lfs merge=lfs -text
