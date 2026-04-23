@@ -7,6 +7,3 @@ __pycache__/
 #database files
 *.db
 
-#model
-*.pt
-data/keystroke/best_model.pt
