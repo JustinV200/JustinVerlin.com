@@ -15,7 +15,7 @@ class KeystrokeRequest(BaseModel):
 
 
 @router.post("/keystroke")
-@limiter.limit("30/hour")
+@limiter.limit("100/hour")
 def keystroke(req: KeystrokeRequest, request: Request):
     try:
         return synthesize(req.text, seed=req.seed)
