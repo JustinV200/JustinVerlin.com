@@ -6,3 +6,7 @@ __pycache__/
 *.log
 #database files
 *.db
+
+#model
+*.pt
+data/keystroke/best_model.pt
