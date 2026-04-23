@@ -13,7 +13,7 @@ A personal deep learning project that learns individual human typing behaviors a
 - Submitted SLURM jobs to a computing cluster for training
 - GitHub: https://github.com/JustinV200/Keystroke-Synthesizer
 
-## JustinAI (This Website)
+## JustAnAI (This Website)
 The RAG-powered chatbot you're talking to right now. Justin built his personal portfolio site with a FastAPI backend, SQLite knowledge base, HuggingFace sentence embeddings, and Groq (LLaMA 3.3 70B) as the LLM. The frontend is vanilla JS/CSS with a dark theme. The chatbot retrieves relevant chunks from a knowledge base about Justin and answers visitor questions.
 
 ## AIECODE
