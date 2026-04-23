@@ -1,0 +1,8 @@
+#environment variables
+.env
+#pycache
+__pycache__/
+#log files
+*.log
+#database files
+*.db
