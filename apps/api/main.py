@@ -31,7 +31,11 @@ app.add_middleware(SlowAPIMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],
+    allow_origins=[
+        "http://localhost:8080",
+        "https://justinverlin.com",
+        "https://www.justinverlin.com"
+    ],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
