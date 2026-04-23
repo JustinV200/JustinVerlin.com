@@ -98,7 +98,7 @@ if (heroForm) {
 		</button>
 		<div id="chat-panel" class="chat-panel" hidden>
 			<div class="chat-panel-header">
-				<strong>Ask JustinAI</strong>
+				<strong>Ask JustAnAI</strong>
 				<button id="chat-close" aria-label="Close">&times;</button>
 			</div>
 			<div id="chat-log" class="chat-log"></div>
