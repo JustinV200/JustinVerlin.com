@@ -7,3 +7,5 @@ __pycache__/
 #database files
 *.db
 
+#model
+*.pt
