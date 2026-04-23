@@ -4,16 +4,39 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Keystroke Sandbox — Justin Verlin</title>
+	<meta name="description" content="Interactive sandbox for a deep learning keystroke synthesis model. Type anything and see how a human would type it — per-character dwell and flight times predicted by a DeBERTa-based neural net." />
+	<meta name="author" content="Justin Verlin" />
+	<link rel="canonical" href="https://justinverlin.com/keystroke.html" />
+
+	<!-- Open Graph / link previews -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://justinverlin.com/keystroke.html" />
+	<meta property="og:title" content="Keystroke Sandbox — Justin Verlin" />
+	<meta property="og:description" content="Interactive demo of a keystroke synthesis model. Watch an AI type like a human and compare against your own rhythm." />
+	<meta property="og:image" content="https://justinverlin.com/assets/og-image.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+	<link rel="icon" href="/assets/images/favicon.svg" sizes="any" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-	<nav class="nav">
+	<nav class="nav" id="site-nav">
 		<a href="index.html" class="nav-brand">Justin Verlin</a>
+		<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
+			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+		</button>
 		<div class="nav-links">
+			<a href="index.html">Home</a>
 			<a href="projects.html">Projects</a>
-			<a href="gallery.html">Gallery</a>
-			<a href="keystroke.html">Keystroke Sandbox</a>
-			<a href="index.html#about">About</a>
+			<a href="keystroke.html" class="nav-active">Keystroke Sandbox</a>
+			<a href="about.html">About</a>
+			<a href="games.html">Games</a>
 			<a href="index.html#contact">Contact</a>
 			<a href="https://github.com/JustinV200" target="_blank" rel="noopener">GitHub</a>
 		</div>
@@ -21,12 +44,123 @@
 
 	<section class="section">
 		<h2>Keystroke Synthesizer Sandbox</h2>
-		<p class="lede" style="margin-bottom:2.5rem;">Interactive demo of my keystroke synthesizer. Coming soon.</p>
+		<p class="lede">
+			A deep learning model that predicts how a human would actually type any text —
+			per-character dwell time, flight time, and typing speed. Try it two ways below.
+		</p>
 
-		<div class="sandbox">
-			<div class="sandbox-placeholder">
-				<p>Sandbox UI will live here.</p>
-				<p style="color:var(--text-dim); font-size:0.9rem;">Type / paste / play back — TBD.</p>
+		<div class="ks-status" id="ks-status" hidden>
+			<span class="ks-status-dot"></span>
+			<span class="ks-status-text">Warming up the model…</span>
+		</div>
+
+		<div class="ks-tabs" role="tablist">
+			<button class="ks-tab active" data-tab="synth" role="tab" aria-selected="true">Synthesize</button>
+			<button class="ks-tab" data-tab="compare" role="tab" aria-selected="false">Compare to you</button>
+		</div>
+
+		<!-- ===== Synthesize mode ===== -->
+		<div class="ks-panel" id="ks-panel-synth" role="tabpanel">
+			<p class="ks-panel-hint">Type or paste some text. The model will type it out the way a human would.</p>
+
+			<textarea
+				id="ks-synth-input"
+				class="ks-textarea"
+				maxlength="280"
+				rows="3"
+				placeholder="Anything you want — up to 280 characters."
+			></textarea>
+			<div class="ks-meta">
+				<span class="ks-counter"><span id="ks-synth-count">0</span> / 280</span>
+				<span class="ks-spacer"></span>
+				<label class="ks-speed">
+					Speed:
+					<select id="ks-synth-speed">
+						<option value="0.5">0.5×</option>
+						<option value="1" selected>1×</option>
+						<option value="2">2×</option>
+						<option value="4">4×</option>
+					</select>
+				</label>
+				<button class="ks-btn ks-btn-ghost" id="ks-synth-replay" disabled>Replay</button>
+				<button class="ks-btn" id="ks-synth-go">Synthesize</button>
+			</div>
+
+			<div class="ks-playback" id="ks-synth-playback" aria-live="polite"></div>
+
+			<div class="ks-stats" id="ks-synth-stats" hidden>
+				<div class="ks-stat"><span class="ks-stat-label">Avg CPM</span><span class="ks-stat-value" id="ks-synth-cpm">—</span></div>
+				<div class="ks-stat"><span class="ks-stat-label">Avg dwell</span><span class="ks-stat-value" id="ks-synth-dwell">—</span></div>
+				<div class="ks-stat"><span class="ks-stat-label">Avg flight</span><span class="ks-stat-value" id="ks-synth-flight">—</span></div>
+				<div class="ks-stat"><span class="ks-stat-label">Total time</span><span class="ks-stat-value" id="ks-synth-total">—</span></div>
+			</div>
+		</div>
+
+		<!-- ===== Compare mode ===== -->
+		<div class="ks-panel" id="ks-panel-compare" role="tabpanel" hidden>
+			<p class="ks-panel-hint">
+				Type anything in the box. We'll record your real keystroke timings, then ask the
+				model to predict how it would've typed the same text. Backspace is fine — only
+				surviving characters count.
+			</p>
+
+			<textarea
+				id="ks-cmp-input"
+				class="ks-textarea"
+				maxlength="280"
+				rows="3"
+				placeholder="Just start typing… (desktop recommended — mobile keystroke timing is unreliable)"
+			></textarea>
+			<div class="ks-meta">
+				<span class="ks-counter"><span id="ks-cmp-count">0</span> / 280</span>
+				<span class="ks-spacer"></span>
+				<button class="ks-btn ks-btn-ghost" id="ks-cmp-reset">Reset</button>
+				<button class="ks-btn" id="ks-cmp-go" disabled>Compare</button>
+			</div>
+
+			<div class="ks-compare-results" id="ks-cmp-results" hidden>
+				<div class="ks-compare-summary">
+					<div class="ks-stat ks-stat-big">
+						<span class="ks-stat-label">Model match</span>
+						<span class="ks-stat-value" id="ks-cmp-score">—</span>
+						<p class="ks-verdict" id="ks-cmp-verdict"></p>
+					</div>
+					<div class="ks-compare-grid">
+						<div class="ks-compare-row ks-compare-head">
+							<span></span><span>You</span><span>Model</span>
+						</div>
+						<div class="ks-compare-row">
+							<span>Avg CPM</span>
+							<span id="ks-cmp-cpm-you">—</span>
+							<span id="ks-cmp-cpm-model">—</span>
+						</div>
+						<div class="ks-compare-row">
+							<span>Avg dwell</span>
+							<span id="ks-cmp-dwell-you">—</span>
+							<span id="ks-cmp-dwell-model">—</span>
+						</div>
+						<div class="ks-compare-row">
+							<span>Avg flight</span>
+							<span id="ks-cmp-flight-you">—</span>
+							<span id="ks-cmp-flight-model">—</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="ks-chart-wrap">
+					<div class="ks-chart-header">
+						<h3>Per-character timings</h3>
+						<div class="ks-legend">
+							<span class="ks-legend-item"><i class="ks-swatch ks-swatch-you"></i>You</span>
+							<span class="ks-legend-item"><i class="ks-swatch ks-swatch-model"></i>Model</span>
+						</div>
+						<div class="ks-chart-toggle">
+							<button class="ks-chip active" data-metric="dwell">Dwell</button>
+							<button class="ks-chip" data-metric="flight">Flight</button>
+						</div>
+					</div>
+					<div class="ks-chart" id="ks-cmp-chart"></div>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -36,5 +170,6 @@
 	</footer>
 
 	<script src="chat.js"></script>
+	<script src="keystroke.js"></script>
 </body>
 </html>

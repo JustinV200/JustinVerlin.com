@@ -3,18 +3,40 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Justin Verlin</title>
-	<meta name="description" content="Justin Verlin — CS + Data Science student at Bucknell. Backend, ML, and RAG projects." />
+	<title>Justin Verlin — CS + Data Science Student</title>
+	<meta name="description" content="Portfolio of Justin Verlin — CS + Data Science student at Bucknell. Building end-to-end ML systems: a keystroke synthesis model, RAG-powered chatbot, and more." />
+	<meta name="author" content="Justin Verlin" />
+	<link rel="canonical" href="https://justinverlin.com/" />
+
+	<!-- Open Graph / link previews -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://justinverlin.com/" />
+	<meta property="og:title" content="Justin Verlin — CS + Data Science Student" />
+	<meta property="og:description" content="Portfolio: keystroke synthesis model, RAG-powered chatbot, backend + ML projects." />
+	<meta property="og:image" content="https://justinverlin.com/assets/og-image.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+	<link rel="icon" href="/assets/images/favicon.svg" sizes="any" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-	<nav class="nav">
+	<nav class="nav" id="site-nav">
 		<a href="index.html" class="nav-brand">Justin Verlin</a>
+		<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
+			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+		</button>
 		<div class="nav-links">
+			<a href="index.html" class="nav-active">Home</a>
 			<a href="projects.html">Projects</a>
-			<a href="gallery.html">Gallery</a>
 			<a href="keystroke.html">Keystroke Sandbox</a>
-			<a href="#about">About</a>
+			<a href="about.html">About</a>
+			<a href="games.html">Games</a>
 			<a href="#contact">Contact</a>
 			<a href="https://github.com/JustinV200" target="_blank" rel="noopener">GitHub</a>
 		</div>
@@ -54,21 +76,27 @@
 		</div>
 	</header>
 
-	<section class="section" id="about">
-		<h2>About</h2>
-		<div class="about-grid">
-			<div>
-				<h3>Right now</h3>
-				<p>Junior at Bucknell (CS + Data Science, 3.66 GPA). Incoming backend/AI intern at <strong>SpinSci</strong> this summer. TA for DSA and Software Engineering &amp; Design.</p>
-			</div>
-			<div>
-				<h3>Focus</h3>
-				<p>Python, SQL, FastAPI, and ML. Actively learning new technologies and techniques in AI and backend development.</p>
-			</div>
-			<div>
-				<h3>Outside tech</h3>
-				<p>Eagle Scout with 3 palms. Co-founded Bucknell's Fresh Fishermen club. Warhammer 40k on the side. Some Helldivers 2 when I can.</p>
-			</div>
+	<section class="section reveal" id="explore">
+		<h2>Explore</h2>
+		<p class="lede">A quick map of the site.</p>
+		<div class="tab-cards">
+			<a class="tab-card" href="projects.html">
+				<h3>Projects →</h3>
+				<p>Things I've built end-to-end — this chatbot, the keystroke synthesizer, backend + ML work.</p>
+			</a>
+			<a class="tab-card" href="keystroke.html">
+				<h3>Keystroke Sandbox →</h3>
+				<p>Type a phrase and watch a transformer predict your dwell and flight times. Live playback + side-by-side comparison.</p>
+			</a>
+			<a class="tab-card" href="about.html">
+				<h3>About →</h3>
+				<p>Background, education, the stack I work in, and what I get up to outside of tech. Resume download lives here too.</p>
+			</a>
+			<a class="tab-card" href="games.html">
+				<h3>Games →</h3>
+				<p>Browser games and interactive experiments.</p>
+				<span class="badge-soon">Coming soon</span>
+			</a>
 		</div>
 	</section>
 
@@ -77,9 +105,50 @@
 		<p>Email: <a href="mailto:JustinVerlin@gmail.com">JustinVerlin@gmail.com</a></p>
 		<p>GitHub: <a href="https://github.com/JustinV200" target="_blank" rel="noopener">github.com/JustinV200</a></p>
         <p>LinkedIn: <a href="https://www.linkedin.com/in/justin-verlin-6026a92bb" target="_blank" rel="noopener">www.linkedin.com/in/justin-verlin-6026a92bb</a></p>
-		<p class="footnote">Built with FastAPI, SQLite, sentence-transformers, and Groq.</p>
+		<p class="footnote">Built with FastAPI, SQLite, sentence-transformers, and OpenAI.</p>
 	</footer>
 
 	<script src="chat.js"></script>
+	<script>
+	/* --- Typewriter on hero h1 --- */
+	(function () {
+		const el = document.querySelector('.hero h1');
+		if (!el) return;
+		const text = el.textContent;
+		el.textContent = '';
+		[...text].forEach((ch, i) =>
+			setTimeout(() => { el.textContent += ch; }, i * 28)
+		);
+	})();
+
+	/* --- Scroll-reveal --- */
+	(function () {
+		const io = new IntersectionObserver(
+			entries => entries.forEach(e => e.target.classList.toggle('visible', e.isIntersecting)),
+			{ threshold: 0.08 }
+		);
+		document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+	})();
+
+	/* --- Nav active-link on scroll --- */
+	(function () {
+		const sections = document.querySelectorAll('section[id], footer[id]');
+		const links = document.querySelectorAll('.nav-links a');
+		const io = new IntersectionObserver(
+			entries => {
+				entries.forEach(e => {
+					if (e.isIntersecting) {
+						links.forEach(a => {
+							const href = a.getAttribute('href');
+							a.classList.toggle('nav-active', href === '#' + e.target.id);
+						});
+					}
+				});
+			},
+			{ rootMargin: '-40% 0px -55%' }
+		);
+		sections.forEach(s => io.observe(s));
+	})();
+	</script>
 </body>
 </html>

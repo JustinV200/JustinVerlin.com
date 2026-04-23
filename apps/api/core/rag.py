@@ -2,6 +2,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from core.db import get_db
 
+# used for embeddings and retrieval. We load all chunk embeddings into memory at startup for fast retrieval.
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 _model = None

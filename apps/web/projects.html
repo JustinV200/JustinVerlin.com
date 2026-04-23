@@ -4,16 +4,39 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Projects — Justin Verlin</title>
+	<meta name="description" content="Projects by Justin Verlin: keystroke synthesis deep learning model, RAG-powered AI chatbot, and other backend + ML work." />
+	<meta name="author" content="Justin Verlin" />
+	<link rel="canonical" href="https://justinverlin.com/projects.html" />
+
+	<!-- Open Graph / link previews -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://justinverlin.com/projects.html" />
+	<meta property="og:title" content="Projects — Justin Verlin" />
+	<meta property="og:description" content="Keystroke synthesis ML model, RAG chatbot, and other backend + ML projects." />
+	<meta property="og:image" content="https://justinverlin.com/assets/og-image.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+	<link rel="icon" href="/assets/images/favicon.svg" sizes="any" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-	<nav class="nav">
+	<nav class="nav" id="site-nav">
 		<a href="index.html" class="nav-brand">Justin Verlin</a>
+		<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
+			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+		</button>
 		<div class="nav-links">
-			<a href="projects.html">Projects</a>
-			<a href="gallery.html">Gallery</a>
+			<a href="index.html">Home</a>
+			<a href="projects.html" class="nav-active">Projects</a>
 			<a href="keystroke.html">Keystroke Sandbox</a>
-			<a href="index.html#about">About</a>
+			<a href="about.html">About</a>
+			<a href="games.html">Games</a>
 			<a href="index.html#contact">Contact</a>
 			<a href="https://github.com/JustinV200" target="_blank" rel="noopener">GitHub</a>
 		</div>
@@ -21,40 +44,40 @@
 
 	<section class="section">
 		<h2>Projects</h2>
-		<p class="lede" style="margin-bottom:2.5rem;">Stuff I've built.</p>
+		<p class="lede">Stuff I've built.</p>
 		<div class="grid">
-			<article class="card">
+			<article class="card featured reveal">
 				<h3>JustinAI — This Site</h3>
 				<p>RAG-powered personal portfolio chatbot. You're talking to it right now. Built with FastAPI, SQLite, HuggingFace sentence embeddings, and Groq (LLaMA 3.3 70B). The chatbot retrieves relevant chunks from a knowledge base about me and answers visitor questions in real time.</p>
 				<p class="card-tags">Python · FastAPI · RAG · sentence-transformers · Groq · Docker</p>
 			</article>
-			<article class="card">
+			<article class="card featured reveal">
 				<h3>Keystroke Synthesizer</h3>
-				<p>The project I'm most proud of. A deep learning model that learns individual human typing behaviors and generates synthetic keystroke dynamics from any text input. Uses a DeBERTa-v3 transformer with heteroscedastic regression to predict dwell time, flight time, and typing speed per character — with calibrated uncertainty. Includes KeyForge, a desktop app that can replay keystrokes live into any window at a realistic human rate.</p>
+				<p> A deep learning model that learns individual human typing behaviors and generates synthetic keystroke dynamics from any text input. Uses a DeBERTa-v3 transformer with heteroscedastic regression to predict dwell time, flight time, and typing speed per character — with calibrated uncertainty. Includes KeyForge, a desktop app that can replay keystrokes live into any window at a realistic human rate.</p>
 				<p class="card-tags">Python · PyTorch · Transformers · Heteroscedastic Regression · Tkinter</p>
 				<a class="card-link" href="https://github.com/JustinV200/Keystroke-Synthesizer" target="_blank" rel="noopener">View on GitHub →</a>
 			</article>
-			<article class="card">
+			<article class="card reveal">
 				<h3>ReGen</h3>
 				<p>Automated document intelligence pipeline. Feed it URLs, PDFs, Word docs, CSVs, or Excel files — it extracts structured data via LLM map-reduce, clusters sources by topic, synthesizes cross-source findings, and generates polished reports rendered with Quarto. Supports brief, standard, and detailed report modes. Built with collaborator Ben Warring.</p>
 				<p class="card-tags">Python · LLMs · litellm · Quarto · pandas · matplotlib</p>
 				<a class="card-link" href="https://github.com/JustinV200/ReGen" target="_blank" rel="noopener">View on GitHub →</a>
 			</article>
-			<article class="card">
+			<article class="card reveal">
 				<h3>AutoVideoProducer</h3>
 				<p>Fully automated multi-channel YouTube Shorts pipeline. GPT-4o scrapes trending stories, OpenAI TTS narrates them, Whisper generates word-timed captions, FFmpeg trims gameplay backgrounds, and Remotion renders 1080×1920 MP4s — all uploaded to five YouTube channels on a 5-hour rolling schedule. Built June 2025.</p>
 				<p class="card-tags">Java · Maven · OpenAI API · FFmpeg · Remotion · React · YouTube API</p>
 				<a class="card-link" href="https://github.com/JustinV200/AutoVideoProducer" target="_blank" rel="noopener">View on GitHub →</a>
 			</article>
-			<article class="card">
+			<article class="card reveal">
 				<h3>AIECODE</h3>
 				<p>Agile project management platform focused on education and students. I redesigned the SQL schema and moved arithmetic into SQL views for a substantial speed improvement, maintain the production database, and built REST API endpoints for AIE5 — the next iteration of the platform, currently in development.</p>
 				<p class="card-tags">SQL · Node.js · REST APIs · Agile</p>
 				<a class="card-link" href="https://aiecode.com/login" target="_blank" rel="noopener">Visit AIECODE →</a>
 			</article>
-			<article class="card">
+			<article class="card reveal">
 				<h3>Battle for Rome 2 <span style="font-weight:400;font-size:0.85em;opacity:0.6;">(Legacy, 2020)</span></h3>
-				<p>A fully-playable 2D side-scrolling action game I built in Python with Pygame during sophomore year of high school — before any formal CS coursework. Multi-phase boss fights (Julius Caesar, Cleopatra, Hannibal), melee and ranged combat, platforming physics, parallax backgrounds, and sound effects. Preserved as-is to show where I started.</p>
+				<p>A fully-playable 2D side-scrolling action game I built in Python with Pygame during my sophomore year of high school — before any formal CS coursework. Multi-phase boss fights (Julius Caesar, Cleopatra), melee and ranged combat, platforming physics, parallax backgrounds, and sound effects. Preserved as-is to show where I started.</p>
 				<p class="card-tags">Python · Pygame</p>
 				<a class="card-link" href="https://github.com/JustinV200/BattleForRome2-Legacy2020" target="_blank" rel="noopener">View on GitHub →</a>
 			</article>
@@ -66,5 +89,13 @@
 	</footer>
 
 	<script src="chat.js"></script>
+	<script>
+	(function () {
+		const io = new IntersectionObserver(
+			entries => entries.forEach(e => e.target.classList.toggle('visible', e.isIntersecting)),
+			{ threshold: 0.08 }
+		);
+		document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+	})();
+	</script>
 </body>
-</html>

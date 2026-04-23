@@ -1,4 +1,21 @@
-const API_URL = "http://localhost:8000/chat";
+const API_URL = "/chat";
+
+/* ---------- Mobile nav toggle (runs on every page) ---------- */
+(function initNavToggle() {
+	const nav = document.getElementById("site-nav");
+	const toggle = document.getElementById("nav-toggle");
+	if (!nav || !toggle) return;
+	toggle.addEventListener("click", () => {
+		const open = nav.classList.toggle("nav-open");
+		toggle.setAttribute("aria-expanded", open ? "true" : "false");
+	});
+	nav.querySelectorAll(".nav-links a").forEach((a) =>
+		a.addEventListener("click", () => {
+			nav.classList.remove("nav-open");
+			toggle.setAttribute("aria-expanded", "false");
+		})
+	);
+})();
 
 async function streamChat(message, history, onToken) {
 	const res = await fetch(API_URL, {
@@ -41,6 +58,7 @@ if (heroForm) {
 		heroInput.value = "";
 		heroResponse.hidden = false;
 		heroResponse.textContent = "";
+		heroResponse.classList.add("streaming");
 		const btn = heroForm.querySelector("button[type=submit]");
 		btn.disabled = true;
 		try {
@@ -52,6 +70,7 @@ if (heroForm) {
 		} catch {
 			heroResponse.textContent = "Couldn't reach the API. Is it running?";
 		} finally {
+			heroResponse.classList.remove("streaming");
 			btn.disabled = false;
 		}
 	}
@@ -127,16 +146,19 @@ if (heroForm) {
 		panelInput.value = "";
 		addMsg("user", message);
 		const botMsg = addMsg("bot", "");
+		botMsg.classList.add("typing");
 		const btn = panelForm.querySelector("button[type=submit]");
 		btn.disabled = true;
 		try {
 			const reply = await streamChat(message, panelHistory, (t) => {
+				botMsg.classList.remove("typing");
 				botMsg.textContent += t;
 				chatLog.scrollTop = chatLog.scrollHeight;
 			});
 			panelHistory.push({ role: "user", content: message });
 			panelHistory.push({ role: "assistant", content: reply });
 		} catch {
+			botMsg.classList.remove("typing");
 			botMsg.textContent = "Couldn't reach the API.";
 		} finally {
 			btn.disabled = false;

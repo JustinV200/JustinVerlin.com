@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>About — Justin Verlin</title>
+	<meta name="description" content="About Justin Verlin — CS + Data Science junior at Bucknell, incoming SpinSci backend/AI intern, Eagle Scout. Download resume here." />
+	<meta name="author" content="Justin Verlin" />
+	<link rel="canonical" href="https://justinverlin.com/about.html" />
+
+	<!-- Open Graph / link previews -->
+	<meta property="og:type" content="profile" />
+	<meta property="og:url" content="https://justinverlin.com/about.html" />
+	<meta property="og:title" content="About — Justin Verlin" />
+	<meta property="og:description" content="CS + Data Science junior at Bucknell, incoming SpinSci Product Development Intern. Resume available." />
+	<meta property="og:image" content="https://justinverlin.com/assets/og-image.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+	<link rel="icon" href="/assets/images/favicon.svg" sizes="any" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<nav class="nav" id="site-nav">
+		<a href="index.html" class="nav-brand">Justin Verlin</a>
+		<button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
+			<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+		</button>
+		<div class="nav-links">
+			<a href="index.html">Home</a>
+			<a href="projects.html">Projects</a>
+			<a href="keystroke.html">Keystroke Sandbox</a>
+			<a href="about.html" class="nav-active">About</a>
+			<a href="games.html">Games</a>
+			<a href="index.html#contact">Contact</a>
+			<a href="https://github.com/JustinV200" target="_blank" rel="noopener">GitHub</a>
+		</div>
+	</nav>
+
+	<section class="section about-page">
+		<div class="about-header">
+			<div class="about-photo">
+				<img src="assets/images/justinAI/justin.jpg" alt="Justin Verlin"
+					onerror="this.style.display='none'" />
+			</div>
+			<div class="about-intro">
+				<p class="eyebrow">About</p>
+				<h1>Justin Verlin</h1>
+				<p class="lede">
+					CS + Data Science junior at Bucknell. Backend and ML-focused.
+					Incoming intern at <strong>SpinSci</strong> this summer.
+				</p>
+				<div class="about-cta">
+					<a class="btn-primary" href="assets/resume/Verlin,Justin.pdf" download>
+						<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+						Download resume
+					</a>
+					<a class="btn-ghost" href="https://www.linkedin.com/in/justin-verlin-6026a92bb" target="_blank" rel="noopener">
+						LinkedIn
+					</a>
+					<a class="btn-ghost" href="https://github.com/JustinV200" target="_blank" rel="noopener">
+						GitHub
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="about-sections">
+			<div class="about-block">
+				<h2>Background</h2>
+				<p>
+					I grew up tinkering — taking apart computers, building small raspberry pi devices, writing
+					little tools when something annoyed me, and building small games for fun. That turned into a real
+					interest in systems: how software gets built, how data moves, how ML
+					models actually make decisions. I'm now a junior at Bucknell studying
+					Computer Science and Data Science with a 3.66 GPA.
+				</p>
+				<p>
+					Most of what I build lives at the intersection of backend
+					infrastructure and applied ML: FastAPI services, RAG pipelines,
+					embedding-based retrieval, and deep learning models I train from
+					scratch. I care about shipping things that work end-to-end, not just
+					prototypes.
+				</p>
+			</div>
+
+			<div class="about-block">
+				<h2>Education</h2>
+				<ul class="about-list">
+					<li>
+						<strong>Bucknell University</strong> — B.S. Computer Science &amp;
+						B.S. Data Science (double major), expected May 2027. Technical GPA 3.66.
+					</li>
+					<li>
+						Teaching Assistant for Data Structures &amp; Algorithms and Software
+						Engineering &amp; Design.
+					</li>
+				</ul>
+			</div>
+
+			<div class="about-block">
+				<h2>Highlights</h2>
+				<ul class="about-list">
+					<li>
+						<strong>Keystroke Synthesizer</strong> — trained a DeBERTa-based
+						heteroscedastic regression model that predicts per-character dwell
+						and flight times. End-to-end pipeline: data collection, training
+						loop, FastAPI inference service, and the interactive demo on this
+						site.
+					</li>
+					<li>
+						<strong>RAG chatbot (this site)</strong> — FastAPI + SQLite +
+						sentence-transformers + OpenAI. Indexes my own bio and projects so
+						visitors can ask the site questions directly.
+					</li>
+					<li>
+						<strong>Incoming SpinSci intern</strong> — Product Development role,
+						summer 2026.
+					</li>
+					<li>
+						<strong>Eagle Scout with 3 palms</strong> Was an SPL for 6 months, led a 12 man team for 120 hours worth of work on building a fence for a community garden, led a 70 mile week long canoeing expedition, and more.
+					</li>
+					<li>
+						<strong>Co-founded Bucknell's Fresh Fishermen club</strong> and
+						serve as its current president.
+					</li>
+				</ul>
+			</div>
+
+			<div class="about-block">
+				<h2>Stack</h2>
+				<div class="about-stack">
+					<div>
+						<h3>Languages</h3>
+						<p>Python, SQL, JavaScript, Java, C</p>
+					</div>
+					<div>
+						<h3>Backend / Infra</h3>
+						<p>FastAPI, SQLite, Docker, nginx, Linux</p>
+					</div>
+					<div>
+						<h3>ML / Data</h3>
+						<p>PyTorch, Hugging Face Transformers, sentence-transformers, NumPy, Pandas</p>
+					</div>
+					<div>
+						<h3>Learning</h3>
+						<p>ML methods, model serving, better training recipes, and agentic AI</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="about-block">
+				<h2>Outside of tech</h2>
+				<p>
+					Warhammer 40k (generic chapter space marines). Some Helldivers 2
+					when the schedule allows. Hiking & Fishing. Camping with my friends in the summer.
+				</p>
+			</div>
+		</div>
+
+		<div class="about-footer-cta">
+			<a class="btn-primary" href="assets/resume/Verlin,Justin.pdf" download>Download resume (PDF)</a>
+			<a class="btn-ghost" href="index.html#contact">Get in touch →</a>
+		</div>
+	</section>
+
+	<footer class="footer">
+		<p><a href="index.html">← Back home</a></p>
+	</footer>
+
+	<script src="chat.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@ class ChatRequest(BaseModel):
     history: list[dict] = []
 
 @router.post("/chat")
-@limiter.limit("20/hour")
+@limiter.limit("50/hour")
 def chat(req: ChatRequest, request: Request):
     if len(req.message) > MAX_INPUT_LENGTH:
         raise HTTPException(status_code=400, detail="Message too long (max 500 characters)")

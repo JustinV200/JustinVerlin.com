@@ -13,6 +13,8 @@ from core.rag import load_index
 from routes.health import router as health_router
 #chat, endpoint for the rag model
 from routes.chat import router as chat_router
+#keystrokes, endpoint for the keystroke synthesizer
+from routes.keystrokes import router as keystrokes_router
 
 
 @asynccontextmanager
@@ -36,6 +38,7 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(chat_router)
+app.include_router(keystrokes_router)
 
 
 @app.get("/")
