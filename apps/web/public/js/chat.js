@@ -92,8 +92,10 @@ if (heroForm) {
 /* ---------- Floating chat bubble (injected on every page) ---------- */
 (function injectBubble() {
 	const html = `
-		<button id="chat-bubble" class="chat-bubble" aria-label="Open chat">
-			<span class="bubble-label">JustAnAI</span>
+		<button id="chat-bubble" class="chat-bubble" aria-label="Ask JustAnAI" data-tooltip="Ask JustAnAI">
+			<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+			</svg>
 		</button>
 		<div id="chat-panel" class="chat-panel" hidden>
 			<div class="chat-panel-header">
