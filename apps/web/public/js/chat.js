@@ -1,4 +1,4 @@
-const API_URL = "/chat";
+const API_URL = "/api/chat";
 
 /* ---------- Mobile nav toggle (runs on every page) ---------- */
 (function initNavToggle() {
@@ -93,8 +93,7 @@ if (heroForm) {
 (function injectBubble() {
 	const html = `
 		<button id="chat-bubble" class="chat-bubble" aria-label="Open chat">
-			<img src="assets/images/justinAI/justinAI.png" alt="" onerror="this.style.display='none'" />
-			<span class="bubble-fallback">Chat</span>
+			<span class="bubble-label">JustAnAI</span>
 		</button>
 		<div id="chat-panel" class="chat-panel" hidden>
 			<div class="chat-panel-header">

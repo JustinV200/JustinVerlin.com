@@ -1,12 +1,12 @@
 /* Keystroke Sandbox — Synthesize + Compare modes.
  *
- * Relies on the /keystroke endpoint returning:
+ * Relies on the /api/keystroke endpoint returning:
  *   { chars: [...], dwell_ms: [...], flight_ms: [null, ...], cpm: [...] }
  */
 (function () {
 	const API_BASE = "";
-	const SYNTH_URL = `${API_BASE}/keystroke`;
-	const STATUS_URL = `${API_BASE}/keystroke/status`;
+	const SYNTH_URL = `${API_BASE}/api/keystroke`;
+	const STATUS_URL = `${API_BASE}/api/keystroke/status`;
 
 	const sleep = (ms) => new Promise((r) => setTimeout(r, Math.max(0, ms)));
 	const fmt = (n, unit = "") => (n == null || Number.isNaN(n) ? "—" : `${Math.round(n)}${unit}`);

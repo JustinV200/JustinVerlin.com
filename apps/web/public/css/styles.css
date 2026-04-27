@@ -919,35 +919,32 @@ a:hover { color: var(--accent-hover); }
 	position: fixed;
 	bottom: 1rem;
 	right: 1rem;
-	width: 80px;
-	height: 80px;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.08);
-	border: 1px solid rgba(255, 255, 255, 0.15);
+	min-width: 88px;
+	height: 56px;
+	padding: 0 1.25rem;
+	border-radius: 999px;
+	background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+	border: 1px solid rgba(255, 255, 255, 0.18);
 	cursor: pointer;
-	box-shadow: 0 0 16px rgba(255, 255, 255, 0.08);
+	box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45), 0 0 0 1px rgba(37, 99, 235, 0.2);
 	z-index: 100;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	transition: transform 0.15s;
-	overflow: hidden;
-	padding: 0;
+	transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-.chat-bubble:hover { transform: scale(1.08); }
-.chat-bubble img {
-	width: 120%;
-	height: 120%;
-	object-fit: cover;
-	object-position: 75% center;
+.chat-bubble:hover {
+	transform: translateY(-2px);
+	background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+	box-shadow: 0 8px 24px rgba(37, 99, 235, 0.55), 0 0 0 1px rgba(59, 130, 246, 0.3);
 }
-.bubble-fallback {
-	color: var(--text);
-	font-weight: 600;
-	font-size: 0.85rem;
-}
-.chat-bubble img:not([style*="display: none"]) + .bubble-fallback {
-	display: none;
+.chat-bubble:active { transform: translateY(0); }
+.bubble-label {
+	color: #fff;
+	font-weight: 700;
+	font-size: 0.95rem;
+	letter-spacing: 0.01em;
+	white-space: nowrap;
 }
 
 /* ---------- Chat panel ---------- */
